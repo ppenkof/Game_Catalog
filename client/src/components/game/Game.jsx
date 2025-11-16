@@ -1,5 +1,5 @@
 export default function Game({
-    _id,
+    // _id,
     title,
     genre,
     imageUrl
