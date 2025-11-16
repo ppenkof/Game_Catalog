@@ -1,7 +1,8 @@
-import { Routes } from "react-router"
+import { Route, Routes } from "react-router"
 import Footer from "./components/footer/Footer"
 import Header from "./components/header/Header"
 import Home from "./components/home/Home"
+import Catalog from "./components/catalog/Catalog"
 
 
 function App() {
@@ -10,8 +11,11 @@ function App() {
     <>
       <Header />
 
-      <Home />
-
+      <Routes>
+        <Route path="/" element = {<Home />} />
+        <Route path="/games" element = {<Catalog />} />
+      </Routes>
+      
       <Footer /> 
 
     </>
