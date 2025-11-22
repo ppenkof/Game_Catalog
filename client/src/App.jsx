@@ -5,6 +5,7 @@ import Home from "./components/home/Home"
 import Catalog from "./components/catalog/Catalog"
 import Details from "./components/details/Details"
 import GameCreate from "./components/game-create/GameCreate"
+import Register from "./components/register/Register"
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/games" element = {<Catalog />} />
         <Route path="/games/:gameId/details" element = {<Details />} />
         <Route path="/games/create" element = {<GameCreate />} />
+        <Route path="/register" element = {<Register />} />
       </Routes>
       
       <Footer /> 
