@@ -7,7 +7,7 @@ export default function Home() {
     const[lastestGames, setLastestGames] = useState([]);  
 
     useEffect(() => {
-        request('http://localhost:3030/jsonstore/games')
+        request('/games')
         // fetch('http://localhost:3030/jsonstore/games')
         //     .then(response => response.json())
             .then(result => {
