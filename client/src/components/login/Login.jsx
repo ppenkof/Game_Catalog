@@ -39,7 +39,7 @@ export default function Login({
                     <input type="email" id="email" name="email" placeholder="Your Email"/>
 
                     <label htmlFor="login-pass">Password</label>
-                    <input type="password" id="login-password" name="password" placeholder="Password"/>
+                    <input type="current-password" id="login-password" name="password" placeholder="Password"/>
                     <input type="submit" className="btn submit" value="Login"/>
                 </div>
             </form>
