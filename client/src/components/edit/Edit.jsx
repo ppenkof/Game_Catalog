@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import request from "../../utils/request";
 
 export default function Edit(){
@@ -13,6 +13,7 @@ export default function Edit(){
     }
     const {gameId} = useParams();
     const [values, setValues] = useState(initialValues);
+    const navigate = useNavigate();
     
     const changeHandler = (e)=>{
         setValues(state => ({
@@ -22,7 +23,7 @@ export default function Edit(){
     }
 
     useEffect(()=>{
-        request(`http://localhost:3030/jsonstore/games/${gameId}`)
+        request(`/games/${gameId}`)
         .then(result => {
             setValues(result);
         })
@@ -31,10 +32,22 @@ export default function Edit(){
         });
     }, [gameId]);
 
+    const editGameHandler = async ()=>{
+       
+        try {
+            await request(`/games/${gameId}`, 'PUT', values);
+            navigate('/games/' + gameId + '/details');
+            
+        } catch (error) {
+            alert(error);
+        }
+        
+    }
+
     return (
         // <!-- add Page ( Only htmlFor logged-in users ) -->
         <section id="edit-page">
-            <form id="add-new-game">
+            <form id="add-new-game" action={editGameHandler}>
                 <div className="container">
 
                     <h1>Edit Game</h1>

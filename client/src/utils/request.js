@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000/jsonstore';
+const baseUrl = 'http://localhost:3030/jsonstore';
 
 export default async function request(url, method, data) {
     let options = {};
@@ -12,7 +12,7 @@ export default async function request(url, method, data) {
         options.body = JSON.stringify(data);
     }
 
-   const response = await fetch(`${baseUrl}/${url}`, options);
+   const response = await fetch(`${baseUrl}${url}`, options);
    
         if (!response.ok) {
             throw response.statusText;
