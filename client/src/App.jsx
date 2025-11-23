@@ -19,9 +19,14 @@ function App() {
       throw new Error('User with this email already exists');
     }
 
-    setRegisteredUsers(state => [...state, {email, password}]);
+    const newUser = {email, password};
 
-    // TODO automatically log in the user after registration
+    setRegisteredUsers(state => [...state, newUser]);
+
+    //automatically log in the user after registration
+    setUser({
+      newUser
+    });
   }
 
   const loginHandler = (email, password)=>{
