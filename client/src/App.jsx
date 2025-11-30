@@ -11,12 +11,14 @@ import Login from "./components/login/Login"
 import Logout from "./components/logout/Logout"
 import Edit from "./components/edit/Edit"
 import UserContext from "./contexts/UserContext"
+import useFetch from "./hooks/useFetch"
 
 
 function App() {
    // After second exerise way with formData without real state management
   // const [registeredUsers, setRegisteredUsers] = useState([]);
   const [user, setUser] = useState(null);
+  const {request} = useFetch();
 
   const registerHandler = async (email, password)=>{
      // After second exerise way with formData without real state management
@@ -29,23 +31,11 @@ function App() {
     //automatically log in the user after registration
     const newUser = {email, password};
 
-    const response = await fetch('http://localhost:3030/users/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newUser)
-    });
-
-    const result = await response.json();
-    console.log(result);
-
-    setUser(
-      {email, password},
-    );
+    const result = await request('/users/register', 'POST', newUser);
+    setUser(result);
   }
 
-  const loginHandler = (email, password)=>{
+  const loginHandler = async (email, password)=>{
      // After second exerise way with formData without real state management
     // const user = registeredUsers.find(user => user.email === email && user.password === password);
 
@@ -53,8 +43,11 @@ function App() {
     //   throw new Error('Invalid email or password');
     // }
 
+    const result = await request('/users/login', 'POST', {email, password});
+    console.log(result);
+
    setUser({
-      user
+      result
     });
   };
 
@@ -80,7 +73,7 @@ function App() {
         <Route path="/games/create" element = {<GameCreate />} />
         <Route path="/games/:gameId/edit" element = {<Edit />} />
         <Route path="/register" element = {<Register />} />
-        <Route path="/login" element = {<Login onLogin={loginHandler}/>} />
+        <Route path="/login" element = {<Login />} />
         <Route path="/logout" element = {<Logout onLogout={logoutHandler}/>} />
       </Routes>
       
