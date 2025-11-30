@@ -44,11 +44,10 @@ function App() {
     // }
 
     const result = await request('/users/login', 'POST', {email, password});
-    console.log(result);
 
-   setUser({
+    setUser({
       result
-    });
+      });
   };
 
   const logoutHandler = ()=>{
