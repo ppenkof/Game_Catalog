@@ -10,12 +10,14 @@ const UserContext = createContext({
         _id:'',
         accessToken:''
     },
-    registerHandler(){},
-    loginHandler(){},
-    logoutHandler(){}
+    registerHandler() { },
+    loginHandler() { },
+    logoutHandler() { }
 });
 
-export function UserProvider(props) {
+export function UserProvider({
+    children
+}) {
     const [user, setUser] = useState(null);
     const {request} = useRequest();
   
@@ -33,10 +35,11 @@ export function UserProvider(props) {
             result
             });
     };
-    
+    console.log(`user.accessToken: ${user?.accessToken}`);
     const logoutHandler = ()=>{
-    return request('/users/logout')
-        .finally(() => setUser(null));
+        console.log(`user.accessToken!!!: ${user.accessToken}`);
+    return request('/users/logout', 'GET', null, { accessToken: user.accessToken })
+        .finally(() =>setUser(null));
     };
 
     const userContextValues = {
@@ -47,9 +50,10 @@ export function UserProvider(props) {
     logoutHandler
     };
 
+    console.log(`UserContext values: ${JSON.stringify(userContextValues)}`);
     return (
         <UserContext.Provider value={userContextValues}>
-            {props.children}
+            {children}
         </UserContext.Provider>
     );
 }
