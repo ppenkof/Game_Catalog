@@ -27,8 +27,6 @@ export default function useRequest(){
         }
     }
 
-console.log(`config: ${JSON.stringify(config)}, user: ${JSON.stringify(user)}, options: ${JSON.stringify(options)}`);
-
    const response = await fetch(`${baseUrl}${url}`, options);
    
     if (!response.ok) {

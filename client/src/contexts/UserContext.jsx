@@ -31,13 +31,11 @@ export function UserProvider({
     const loginHandler = async (email, password)=>{
         const result = await request('/users/login', 'POST', {email, password});
 
-        setUser({
-            result
-            });
+        setUser(result);
     };
-    console.log(`user.accessToken: ${user?.accessToken}`);
-    const logoutHandler = ()=>{
-        console.log(`user.accessToken!!!: ${user.accessToken}`);
+   
+    const logoutHandler = () => {
+        // console.log(`user.accessToken!!!: ${user.accessToken}`);
     return request('/users/logout', 'GET', null, { accessToken: user.accessToken })
         .finally(() =>setUser(null));
     };
@@ -50,7 +48,7 @@ export function UserProvider({
     logoutHandler
     };
 
-    console.log(`UserContext values: ${JSON.stringify(userContextValues)}`);
+
     return (
         <UserContext.Provider value={userContextValues}>
             {children}
