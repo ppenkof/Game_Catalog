@@ -36,7 +36,7 @@ function App() {
   
   return (
     <>
-      <Header user={user}/>
+      <Header />
 
       <Routes>
         <Route path="/" element = {<Home />} />
