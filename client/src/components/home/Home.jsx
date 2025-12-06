@@ -1,24 +1,36 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import GameCard from "../game-card/GameCard";
-import request from "../../utils/request";
+// import request from "../../utils/request";
+import useRequest from "../../hooks/useRequest";
 
 export default function Home() {
+    // const urlSearchParams = new URLSearchParams({
+    //     sortBy: '_createdOn',
+    //     order: 'desc',
+    //     offset: '3',
+    //     limit: '3'
+    // });
+    // const {data: lastestGames} = useRequest(`/data/games?${urlSearchParams.toString()}`, []);
 
-    const[lastestGames, setLastestGames] = useState([]);  
+    //Second way
+    const {data: lastestGames} = useRequest(`/data/games?sortBy=_createdOn%20desc&pageSize=3`, []);
 
-    useEffect(() => {
-        request('/games')
-        // fetch('http://localhost:3030/jsonstore/games')
-        //     .then(response => response.json())
-            .then(result => {
-                // Process and display the latest games
-                const resultGames = Object.values(result)
-                    .sort((a, b) => b._createdOn - a._createdOn)
-                    .slice(0, 3);
-                setLastestGames(resultGames);
-            })
-            .catch(err => alert(err.message));
-    }, []);
+    // Old way with useEffect and useState
+    // const[lastestGames, setLastestGames] = useState([]);  
+
+    // useEffect(() => {
+    //     request('/games')
+    //     // fetch('http://localhost:3030/jsonstore/games')
+    //     //     .then(response => response.json())
+    //         .then(result => {
+    //             // Process and display the latest games
+    //             const resultGames = Object.values(result)
+    //                 .sort((a, b) => b._createdOn - a._createdOn)
+    //                 .slice(0, 3);
+    //             setLastestGames(resultGames);
+    //         })
+    //         .catch(err => alert(err.message));
+    // }, []);
 
     return (
       <section id="welcome-world">
