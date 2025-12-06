@@ -28,6 +28,7 @@ export default function useRequest(url, initialState){
         }
     }
 
+    
    const response = await fetch(`${baseUrl}${url}`, options);
    
     if (!response.ok) {
@@ -38,19 +39,16 @@ export default function useRequest(url, initialState){
         return {};
     }
 
-        
     const result = await response.json();
-    
+
     return result;
     };
 
     useEffect(() => {
         if(!url) return;
-
+        
         request(url)
-            .then(result => {
-                setData(result);
-            })
+            .then(result => setData(result))
             .catch(err => alert(err));
     }, [url]);
 

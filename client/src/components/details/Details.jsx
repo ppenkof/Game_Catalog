@@ -1,46 +1,50 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import CreateComent from "./create-comment/CreateComent";
-import request from "../../utils/request";
+// import request from "../../utils/request";
 import DetailsComments from "./details-comments/DetailsComments";
+import useRequest from "../../hooks/useRequest";
 
 export default function Details({
     user
 }) {
 
     const {gameId} = useParams();
-    const[game, setGame] = useState({});
+    //const[game, setGame] = useState({});
     const navigate = useNavigate();
     const [refresh, setRefresh] = useState(false);
-    
-    useEffect(() => {
-        // fetch(`http://localhost:3030/jsonstore/games/${gameId}`)
-        //     .then(response => response.json())
-        //     .then(result => {
-        //         setGame(result);
-        //     })
-        //     .catch(err => alert(err.message));
+    const {data: game, request} = useRequest(`/data/games/${gameId}`, {});
 
-        request(`/games/${gameId}`)
-            .then(result => {
-                setGame(result);
-            })
-            .catch(err => alert(err.message));
+    //Old way with useEffect and useState
+    // useEffect(() => {
+    //     // fetch(`http://localhost:3030/jsonstore/games/${gameId}`)
+    //     //     .then(response => response.json())
+    //     //     .then(result => {
+    //     //         setGame(result);
+    //     //     })
+    //     //     .catch(err => alert(err.message));
 
-    }, [gameId]);
+    //     request(`/games/${gameId}`)
+    //         .then(result => {
+    //             setGame(result);
+    //         })
+    //         .catch(err => alert(err.message));
+
+    // }, [gameId]);
 
     const deleteGameHandler = async () => {
-        const isConfirmed = confirm('Are you sure you want to delete this game?');
+        const isConfirmed = confirm(`Are you sure you want to delete ${game.title} game?`);
         if(!isConfirmed){
             return;
         }
+
         try {
-            await fetch(`http://localhost:3030/jsonstore/games/${gameId}`, {
-            method: 'DELETE'
-            });
+            await request(`/data/games/${gameId}`, 'DELETE');
             navigate('/games');
+
         } catch (error) {
-            alert('Unable to delete game:', error.message);  
+            alert('Unable to delete game:', error.message); 
+
         }    
     }
 
